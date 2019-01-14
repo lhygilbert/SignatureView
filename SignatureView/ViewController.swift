@@ -12,6 +12,13 @@ class ViewController: UIViewController {
 
     private let signView = SignatureView()
     
+    private lazy var clearButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.setTitle("Clear", for: .normal)
+        button.addTarget(self, action: #selector(clearButtonTapped), for: .touchUpInside)
+        return button
+    }()
+    
     private lazy var captureButton: UIButton = {
         let button = UIButton(type: .system)
         button.setTitle("Capture", for: .normal)
@@ -30,10 +37,19 @@ class ViewController: UIViewController {
         signView.widthAnchor.constraint(equalToConstant: 320).isActive = true
         signView.heightAnchor.constraint(equalToConstant: 180).isActive = true
         
+        view.addSubview(clearButton)
+        clearButton.translatesAutoresizingMaskIntoConstraints = false
+        clearButton.topAnchor.constraint(equalTo: signView.bottomAnchor, constant: 4).isActive = true
+        clearButton.trailingAnchor.constraint(equalTo: signView.trailingAnchor).isActive = true
+        
         view.addSubview(captureButton)
         captureButton.translatesAutoresizingMaskIntoConstraints = false
         captureButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         captureButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -12).isActive = true
+    }
+    
+    @objc private func clearButtonTapped() {
+        signView.clear()
     }
     
     @objc private func captureButtonTapped() {
